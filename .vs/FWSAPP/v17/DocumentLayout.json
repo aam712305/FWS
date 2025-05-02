@@ -1,0 +1,109 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "F:\\FWS\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|f:\\fws\\idpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|solutionrelative:idpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|f:\\fws\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|f:\\fws\\services\\servicesetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|solutionrelative:services\\servicesetting.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|f:\\fws\\settingpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|solutionrelative:settingpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|f:\\fws\\settingpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{4B14509D-9AEE-4DD7-B83C-E45CF3505B10}|FWSAPP.csproj|solutionrelative:settingpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "IDPage.xaml.cs",
+              "DocumentMoniker": "F:\\FWS\\IDPage.xaml.cs",
+              "RelativeDocumentMoniker": "IDPage.xaml.cs",
+              "ToolTip": "F:\\FWS\\IDPage.xaml.cs",
+              "RelativeToolTip": "IDPage.xaml.cs",
+              "ViewState": "AgIAAAEBAAAAAAAAAAAewBEBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:19:08.229Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ServiceSetting.cs",
+              "DocumentMoniker": "F:\\FWS\\Services\\ServiceSetting.cs",
+              "RelativeDocumentMoniker": "Services\\ServiceSetting.cs",
+              "ToolTip": "F:\\FWS\\Services\\ServiceSetting.cs",
+              "RelativeToolTip": "Services\\ServiceSetting.cs",
+              "ViewState": "AgIAAFoAAAAAAAAAAAApwGAAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:15:04.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "F:\\FWS\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "F:\\FWS\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAB4AAAAAAAAAAAAgwCwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:09:08.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "settingpage.xaml.cs",
+              "DocumentMoniker": "F:\\FWS\\settingpage.xaml.cs",
+              "RelativeDocumentMoniker": "settingpage.xaml.cs",
+              "ToolTip": "F:\\FWS\\settingpage.xaml.cs",
+              "RelativeToolTip": "settingpage.xaml.cs",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAAACcAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:07:37.211Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "settingpage.xaml",
+              "DocumentMoniker": "F:\\FWS\\settingpage.xaml",
+              "RelativeDocumentMoniker": "settingpage.xaml",
+              "ToolTip": "F:\\FWS\\settingpage.xaml",
+              "RelativeToolTip": "settingpage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-05-02T03:07:36.632Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

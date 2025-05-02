@@ -102,7 +102,7 @@ namespace FWSAPP
                     Preferences.Set("server", server);
 
                     // ➡️ 同時取得舊版本號
-                    oldVersion = jsonDoc.RootElement.GetProperty("latestApkVersion").GetString() ?? "";
+                    oldVersion = jsonDoc.RootElement.GetProperty("latestApkVersion").GetString() ?? "";                    
                 }
                 catch (Exception ex)
                 {

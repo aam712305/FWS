@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
     這段程式碼已由工具產生。
-    其從 F:\FWSAPP\Platforms\Android\AndroidManifest.xml 所產生
+    其從 F:\FWS\Platforms\Android\AndroidManifest.xml 所產生
     變更此檔案可能會導致不正確的行為，而且如果重新產生內容，
     變更將會遺失。
     -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" package="com.companyname.fwsapp" android:versionName="1.0">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" package="com.companyname.fwsapp" android:versionName="1.0.0">
   <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="34" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />

@@ -21,10 +21,10 @@ public partial class SettingsPage : ContentPage
 
         serverLabel.Text = Preferences.Get("server", "");
         
-        // 伺服器最新版
+        // 伺服器APK版本
         apkLabel.Text = $"線上版本：{Preferences.Get("latestApkVersion", "未知")}";
 
-        // ➡︎ 新增：顯示手機當前安裝版本
+        // 當前APK版本
         currentLabel.Text = $"當前版本：{AppInfo.VersionString}";
 
         LoadSettingsJson();

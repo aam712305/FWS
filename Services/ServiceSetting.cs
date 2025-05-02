@@ -102,7 +102,7 @@ public static class ServiceSetting
             var jsonDoc = JsonDocument.Parse(jsonText);
 
             var latestVersion = jsonDoc.RootElement.GetProperty("latestApkVersion").GetString();
-            var apkDownloadUrl = jsonDoc.RootElement.GetProperty("apkDownloadUrl").GetString();
+            var apkDownloadUrl = $"{Preferences.Get("server", "")}/api/fws.apk";
 
             if (string.IsNullOrEmpty(latestVersion) || string.IsNullOrEmpty(apkDownloadUrl))
                 return;
