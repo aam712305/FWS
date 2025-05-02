@@ -20,6 +20,12 @@ public partial class SettingsPage : ContentPage
         base.OnAppearing();
 
         serverLabel.Text = Preferences.Get("server", "");
+        
+        // 伺服器最新版
+        apkLabel.Text = $"線上版本：{Preferences.Get("latestApkVersion", "未知")}";
+
+        // ➡︎ 新增：顯示手機當前安裝版本
+        currentLabel.Text = $"當前版本：{AppInfo.VersionString}";
 
         LoadSettingsJson();
         
@@ -99,7 +105,11 @@ public partial class SettingsPage : ContentPage
             if (jsonRoot?["stores"] == null)
                 throw new InvalidOperationException("JSON內沒有stores節點");
 
-            var stores = jsonRoot["stores"]?
+            // ⬅︎ 新增：把 latestApkVersion 寫入 Preferences
+            var fileVer = jsonRoot?["latestApkVersion"]?.ToString() ?? "";
+            Preferences.Set("latestApkVersion", fileVer);
+
+            var stores = jsonRoot?["stores"]?
                 .AsArray()
                 .Select(store => store?["storeName"]?.ToString() ?? "")
                 .Distinct()

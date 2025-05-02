@@ -8,12 +8,12 @@
 
     <StackLayout Padding="10,10,10,10" Spacing="20">
         
-        <Label Text="設定頁面" FontSize="24" HorizontalOptions="Center" />
-
-        <StackLayout Orientation="Horizontal">
-            <Label Text="當前版本" FontSize="20" />
-            <Label x:Name="apkLabel" FontSize="20" Padding="10,2,0,0" />
-        </StackLayout>
+        <Label Text="設定頁面" FontSize="24" HorizontalOptions="Center" />               
+        
+        <StackLayout Orientation="Horizontal">            
+            <Label x:Name="currentLabel" FontSize="20" Padding="0,2,0,0" />            
+            <Label x:Name="apkLabel" FontSize="20" Padding="20,2,0,0" />
+        </StackLayout>        
         
         <StackLayout Orientation="Horizontal">
             <Label Text="當前伺服器" FontSize="20" />
