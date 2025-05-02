@@ -267,8 +267,18 @@ public partial class IDPage : ContentPage
     {
         var tcs = new TaskCompletionSource<(string?, string?)>();
 
-        var usernameEntry = new Entry { Placeholder = "輸入帳號" };
-        var passwordEntry = new Entry { IsPassword = true, Placeholder = "輸入密碼" };
+        var usernameEntry = new Entry
+        {
+            Placeholder = "輸入帳號",
+            TextColor = Application.Current?.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
+
+        };
+        var passwordEntry = new Entry
+        {
+            IsPassword = true,
+            Placeholder = "輸入密碼",
+            TextColor = Application.Current?.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
+        };
         var confirmButton = new Button { Text = "確認" };
         var cancelButton = new Button { Text = "取消" };
 
