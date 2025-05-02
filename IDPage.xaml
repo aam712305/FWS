@@ -1,0 +1,79 @@
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FWSAPP.IDPage"
+             Padding="{OnPlatform iOS='10,40,10,10', Android='0,0,0,30', WinUI='0,0,0,30'}" 
+             Shell.NavBarIsVisible="False"
+             Shell.FlyoutHeight="0">
+    
+    <Grid RowDefinitions="Auto,*,auto" RowSpacing="5">
+
+        <!-- 三條橫線、搜尋框、更新按鈕 同一排 -->
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto" Padding="5" ColumnSpacing="5">
+
+            <Button Grid.Column="0"
+                    Text="≡"
+                    FontSize="28"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    BackgroundColor="White"
+                    TextColor="Black"
+                    Clicked="OnMenuButtonClicked" />
+
+            <Entry Grid.Column="1"
+                   x:Name="SearchEntry"
+                   Placeholder="搜尋"
+                   HeightRequest="50"
+                   VerticalOptions="Center"
+                   TextChanged="SearchEntry_TextChanged" />
+
+            <Button Grid.Column="2"
+                    Text="⟳"
+                    FontSize="24"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    BackgroundColor="White"
+                    TextColor="Black"
+                    Clicked="OnForceRefreshClicked" />
+        </Grid>
+
+        <!-- 資料顯示 -->
+        <CollectionView Grid.Row="1"
+                        x:Name="idView"                        
+                        ItemsSource="{Binding IDList}"
+                        RemainingItemsThreshold="5"                        
+                        RemainingItemsThresholdReached="IdView_RemainingItemsThresholdReached">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="Auto,*" Padding="5" ColumnSpacing="10">
+                        <Image Grid.Column="0" Source="{Binding 圖像}" WidthRequest="80" HeightRequest="80" />
+                        <StackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label>
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span Text="{Binding ID, StringFormat='{0}-'}"/>
+                                        <Span Text="{Binding 姓名, StringFormat='{0}-'}"/>
+                                        <Span Text="{Binding 帳號, StringFormat='{0}-'}"/>
+                                        <Span Text="{Binding 末四碼, StringFormat='{0}-'}"/>
+                                        <Span Text="{Binding 等級, StringFormat='V{0}'}"/>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>                            
+                            <Label Text="{Binding 備註}" LineBreakMode="NoWrap" FontSize="Small" TextColor="Gray"/>
+                        </StackLayout>
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnItemTapped"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- 底部按鈕 -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" HeightRequest="50" ColumnSpacing="1">
+            <Button Grid.Column="0" Text="ID表" BorderWidth="1" BorderColor="Black" Clicked="OnIDPageClicked"/>
+            <Button Grid.Column="1" Text="歷史進客" BorderWidth="1" BorderColor="Black" Clicked="OnHistoryPageClicked"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

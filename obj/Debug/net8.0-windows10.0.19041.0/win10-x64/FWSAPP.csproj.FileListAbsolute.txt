@@ -1,0 +1,12 @@
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\FWSAPP.csproj.AssemblyReference.cache
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauiimage.inputs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauifont.inputs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauisplash.inputs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauimanifest.stamp
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.i.cs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.g.cs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\XamlTypeInfo.g.cs
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xaml
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\Platforms\Windows\App.xbf
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\XamlSaveStateFile.xml
+F:\FWSAPP\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\FWSAPP.GeneratedMSBuildEditorConfig.editorconfig

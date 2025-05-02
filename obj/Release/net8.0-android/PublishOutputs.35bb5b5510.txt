@@ -1,0 +1,4 @@
+F:\FWSAPP\.releas\com.companyname.fwsapp-Signed.aab
+F:\FWSAPP\.releas\com.companyname.fwsapp.aab
+F:\FWSAPP\.releas\com.companyname.fwsapp-Signed.apk
+F:\FWSAPP\.releas\_Microsoft.Android.Resource.Designer.dll

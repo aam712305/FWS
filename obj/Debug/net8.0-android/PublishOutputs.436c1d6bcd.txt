@@ -1,0 +1,3 @@
+F:\FWSAPP\bin\Debug\net8.0-android\publish\com.companyname.fwsapp-Signed.apk
+F:\FWSAPP\bin\Debug\net8.0-android\publish\com.companyname.fwsapp.apk
+F:\FWSAPP\bin\Debug\net8.0-android\publish\_Microsoft.Android.Resource.Designer.dll
