@@ -4,13 +4,4 @@
              xmlns:local="clr-namespace:FWSAPP"
              xmlns:converters="clr-namespace:FWSAPP.Converters"
              x:Class="FWSAPP.App">
-    <Application.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
-                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <converters:BoolToBanTextConverter x:Key="BoolToBanTextConverter" />
-        </ResourceDictionary>
-    </Application.Resources>
 </Application>
