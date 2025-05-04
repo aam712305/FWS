@@ -1,4 +1,6 @@
-﻿using FWSAPP.Models; 
+﻿#pragma warning disable CA1416 // 驗證平台相容性
+
+using FWSAPP.Models; 
 using FWSAPP.Services;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -6,8 +8,10 @@ using System.Text.Json;
 
 namespace FWSAPP;
 
+
 public partial class IDPage : ContentPage
 {
+
     private static readonly string LocalSettingPath = Path.Combine(FileSystem.AppDataDirectory, "appsetting.json");
     private const int 每次載入筆數 = 500;
     private List<IDModel> 全部資料 = [];
@@ -48,6 +52,20 @@ public partial class IDPage : ContentPage
                 IDList.Clear();
                 LoadNextBatch();
             });
+            var currentUser = Preferences.Get("currentUser", "");
+            var currentPermission = Preferences.Get("currentPermission", "");
+
+            if (currentPermission != "現場" && currentPermission != "幹部")
+            {
+                var noteService = new NoteService();
+
+                foreach (var item in 全部資料)
+                {
+                    string? personalNote = await noteService.GetSpecialNoteAsync(item.ID, currentUser);
+                    item.個人備註 = personalNote ?? "";
+                }
+            }
+
         }
         catch (Exception ex)
         {
@@ -233,8 +251,7 @@ public partial class IDPage : ContentPage
                 var requiredWifiName = storeMatchedWifiElement.GetProperty("wifi").GetString() ?? "";
 
                 if (!string.IsNullOrEmpty(requiredWifiName) && wifiName != requiredWifiName)
-                {
-                    await DisplayAlert("錯誤", $"您所在Wi-Fi({wifiName})與帳號所屬店家({storeOfUser})設定的Wi-Fi({requiredWifiName})不符，不可登入。", "OK");
+                {                    
                     return;
                 }
             }
@@ -247,8 +264,6 @@ public partial class IDPage : ContentPage
             var settingsPageFinal = Application.Current?.Handler?.MauiContext?.Services.GetService<SettingsPage>();
             if (settingsPageFinal is not null)
                 await Navigation.PushAsync(settingsPageFinal);
-            else
-                await DisplayAlert("錯誤", "無法開啟設定頁面", "OK");
         }
         catch (Exception ex)
         {
@@ -260,25 +275,13 @@ public partial class IDPage : ContentPage
         }
     }
 
-
-
     // 新增輸入帳號密碼提示的方法
     private static Task<(string? username, string? password)> DisplayUserPasswordPromptAsync()
     {
         var tcs = new TaskCompletionSource<(string?, string?)>();
 
-        var usernameEntry = new Entry
-        {
-            Placeholder = "輸入帳號",
-            TextColor = Application.Current?.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
-
-        };
-        var passwordEntry = new Entry
-        {
-            IsPassword = true,
-            Placeholder = "輸入密碼",
-            TextColor = Application.Current?.RequestedTheme == AppTheme.Dark ? Colors.White : Colors.Black
-        };
+        var usernameEntry = new Entry { Placeholder = "輸入帳號" };
+        var passwordEntry = new Entry { IsPassword = true, Placeholder = "輸入密碼" };
         var confirmButton = new Button { Text = "確認" };
         var cancelButton = new Button { Text = "取消" };
 
@@ -332,6 +335,7 @@ public partial class IDPage : ContentPage
 
         return tcs.Task;
     }
+
     private async void OnItemTapped(object sender, EventArgs e)
     {
         var tappedGrid = (Grid)sender;
@@ -342,45 +346,23 @@ public partial class IDPage : ContentPage
 
         var apiService = new NoteService();
         string username = Preferences.Get("currentUser", "");
-        var specialNote = selectedItem.備註 ?? "無備註";
+        string permission = Preferences.Get("currentPermission", "");
+        string specialNote = selectedItem.備註 ?? "";
 
-        var permission = Preferences.Get("currentPermission", "");
-        var noteTitleLabel = new Label
-        {
-            Text = (permission == "現場" || permission == "幹部") ? "備註" : "現場備註",
-            FontSize = 18,
-            FontAttributes = FontAttributes.Bold,
-            HorizontalOptions = LayoutOptions.Start,
-            Padding = new Thickness(10, 5, 10, 0)
-        };
-
-        var noteLabel = new Label
-        {
-            Text = specialNote,
-            FontSize = 16,
-            Padding = new Thickness(10)
-        };
-        var modifiedByLabel = new Label
-        {
-            Text = $"修改者：{selectedItem.備註修改者}",
-            FontSize = 14,
-            Padding = new Thickness(10, 0)
-        };
-
-        var modifiedTimeLabel = new Label
-        {
-            Text = $"最後修改時間：{selectedItem.備註修改時間}",
-            FontSize = 14,
-            Padding = new Thickness(10, 0)
-        };
         var imageView = new Image
         {
             Source = selectedItem.圖像,
-            HeightRequest = 300, // 調整圖片高度為原本2倍
+            HeightRequest = 300,
             HorizontalOptions = LayoutOptions.Center
         };
-
-        // 加入點擊圖片滿版顯示
+        var gameStatusPicker = new Picker
+        {
+            Title = "遊戲狀況",
+            ItemsSource = new List<string> { "正常", "禁打" },
+            SelectedItem = selectedItem.狀態 == "True" ? "禁打" : "正常",
+            HorizontalOptions = LayoutOptions.Fill,
+            Margin = new Thickness(10, 0)
+        };
         var tapGesture = new TapGestureRecognizer();
         tapGesture.Tapped += async (_, _) =>
         {
@@ -391,35 +373,67 @@ public partial class IDPage : ContentPage
                 HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Fill
             };
-
             var fullImagePage = new ContentPage
             {
-                Content = new Grid
-                {
-                    Children = { fullImage }
-                },
+                Content = new Grid { Children = { fullImage } },
                 BackgroundColor = Colors.Black
             };
-
             await Navigation.PushAsync(fullImagePage);
         };
         imageView.GestureRecognizers.Add(tapGesture);
+        
+        var noteLabel = new Label
+        {
+            Text = specialNote,            
+            Padding = new Thickness(10)
+        };
 
         var contentStack = new VerticalStackLayout
         {
-            Children = { imageView, noteTitleLabel, noteLabel, modifiedByLabel, modifiedTimeLabel },
-            Spacing = 10
+            Spacing = 10,
+            Children =
+        {
+            imageView,            
+            new HorizontalStackLayout
+            {
+                Spacing = 5,
+                Padding = new Thickness(10, 0),
+                Children =
+                {
+                    new Label
+                    {
+                        Text = "遊戲狀況：",                       
+                        VerticalOptions = LayoutOptions.Center
+                    },
+                    gameStatusPicker
+                }
+            },
+
+            new Label
+            {
+                Text = "現場備註",
+                FontAttributes = FontAttributes.Bold,
+                HorizontalOptions = LayoutOptions.Start,
+                Padding = new Thickness(10, 5, 10, 0)
+            },
+            noteLabel,
+            new Label
+            {
+                Text = $"修改者：{selectedItem.備註修改者}",
+                Padding = new Thickness(10, 0)
+            },
+            new Label
+            {
+                Text = $"最後修改時間：{selectedItem.備註修改時間}",
+                Padding = new Thickness(10, 0)
+            }
+        }
         };
-        bool OnItemTapped點擊 = false;
+
+        // 幹部與其他可修改現場備註
         if (permission != "現場")
         {
-            if (OnItemTapped點擊)
-                return; // 如果已經點擊過就直接返回
-
-            OnItemTapped點擊 = true; // 設定已點擊過
-
-            var editButton = new Button{Text = (permission == "現場" || permission == "幹部") ? "修改備註" : "修改現場備註"};
-
+            var editButton = new Button { Text = "修改現場備註" };
             editButton.Clicked += async (_, _) =>
             {
                 var editor = new Editor
@@ -435,10 +449,10 @@ public partial class IDPage : ContentPage
                 var buttonGrid = new Grid
                 {
                     ColumnDefinitions =
-        [
-            new ColumnDefinition(GridLength.Star),
-            new ColumnDefinition(GridLength.Star)
-        ],
+                {
+                    new ColumnDefinition(GridLength.Star),
+                    new ColumnDefinition(GridLength.Star)
+                },
                     ColumnSpacing = 10,
                     Padding = new Thickness(0, 10)
                 };
@@ -464,48 +478,119 @@ public partial class IDPage : ContentPage
                     await Navigation.PopModalAsync();
                     if (!string.IsNullOrWhiteSpace(result))
                     {
-                        bool success = await apiService.UpdateCommonNoteAsync(selectedItem.ID, result, username);
-                          noteLabel.Text = result;
-                          selectedItem.備註 = result;                        
+                        bool noteSuccess = await apiService.UpdateCommonNoteAsync(selectedItem.ID, result, username);
+
+                        // 新增：呼叫更新遊戲狀況的 API
+                        bool gameStatusSuccess = await apiService.UpdateGameStatusAsync(
+                            selectedItem.ID,
+                            gameStatusPicker.SelectedItem?.ToString() == "禁打" ? "True" : "False"
+                        );
+
+                        // 更新畫面資料
+                        if (noteSuccess)
+                        {
+                            noteLabel.Text = result;
+                            selectedItem.備註 = result;
+                        }
+
+                        if (gameStatusSuccess)
+                        {
+                            selectedItem.狀態 = gameStatusPicker.SelectedItem?.ToString() == "禁打" ? "True" : "False";
+                        }
                     }
-                    //await Navigation.PopModalAsync();
                 };
 
-                cancelButton.Clicked += async (s, e) =>
-                {
-                    await Navigation.PopModalAsync();
-                };
-
+                cancelButton.Clicked += async (s, e) => await Navigation.PopModalAsync();
                 await Navigation.PushModalAsync(inputPage);
             };
 
             contentStack.Children.Add(editButton);
+        }
 
-            // ⚠️ 新增個人備註
-            var noteTitleLabel2 = new Label
+        // 只有「非現場、非幹部」才能看到個人備註
+        if (permission != "現場" && permission != "幹部")
+        {
+            contentStack.Children.Add(new Label
             {
                 Text = "個人備註",
-                FontSize = 18,
                 FontAttributes = FontAttributes.Bold,
                 HorizontalOptions = LayoutOptions.Start,
                 Padding = new Thickness(10, 5, 10, 0)
-            };
+            });
 
-            var personalNoteLabel = new Label
+            var specialNoteLabel = new Label
             {
-                Text = "特別備註的內容(稍後實現)",
-                FontSize = 16,
+                Text = "",               
                 Padding = new Thickness(10)
             };
+            contentStack.Children.Add(specialNoteLabel);
+
+            // 非同步取得個人備註
+            _ = Task.Run(async () =>
+            {
+                string? specialNote = await apiService.GetSpecialNoteAsync(selectedItem.ID, username);
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    specialNoteLabel.Text = string.IsNullOrWhiteSpace(specialNote) ? "" : specialNote;
+                });
+            });
 
             var editPersonalNoteButton = new Button { Text = "修改備註" };
             editPersonalNoteButton.Clicked += async (_, _) =>
             {
-                await DisplayAlert("提示", "特別備註修改功能晚點實現", "確定");
+                var editor = new Editor
+                {
+                    Text = specialNoteLabel.Text,
+                    AutoSize = EditorAutoSizeOption.TextChanges,
+                    HeightRequest = 600
+                };
+
+                var confirmButton = new Button { Text = "確認", HorizontalOptions = LayoutOptions.Fill };
+                var cancelButton = new Button { Text = "取消", HorizontalOptions = LayoutOptions.Fill };
+
+                var buttonGrid = new Grid
+                {
+                    ColumnDefinitions =
+        {
+            new ColumnDefinition(GridLength.Star),
+            new ColumnDefinition(GridLength.Star)
+        },
+                    ColumnSpacing = 10,
+                    Padding = new Thickness(0, 10)
+                };
+                buttonGrid.Add(confirmButton, 0);
+                buttonGrid.Add(cancelButton, 1);
+
+                var stack = new VerticalStackLayout
+                {
+                    Padding = new Thickness(20),
+                    Spacing = 10,
+                    Children = { editor, buttonGrid }
+                };
+
+                var inputPage = new ContentPage
+                {
+                    Title = "修改個人備註",
+                    Content = stack
+                };
+
+                confirmButton.Clicked += async (s, e) =>
+                {
+                    var result = editor.Text;
+                    await Navigation.PopModalAsync();
+                    if (!string.IsNullOrWhiteSpace(result))
+                    {
+                        bool success = await apiService.UpdateSpecialNoteAsync(selectedItem.ID, username, result);
+                        if (success)
+                            specialNoteLabel.Text = result;
+                    }
+                };
+
+                cancelButton.Clicked += async (s, e) => await Navigation.PopModalAsync();
+                await Navigation.PushModalAsync(inputPage);
             };
 
-            contentStack.Children.Add(noteTitleLabel2);
-            contentStack.Children.Add(personalNoteLabel);
+
             contentStack.Children.Add(editPersonalNoteButton);
         }
 
@@ -517,6 +602,7 @@ public partial class IDPage : ContentPage
 
         await Navigation.PushAsync(detailPage);
     }
+
 
 
     private void SearchEntry_TextChanged(object? sender, TextChangedEventArgs e)
@@ -539,3 +625,4 @@ public partial class IDPage : ContentPage
         }
     }
 }
+#pragma warning restore CA1416

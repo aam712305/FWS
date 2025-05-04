@@ -1,7 +1,29 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
-<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:FWSAPP"
-             xmlns:converters="clr-namespace:FWSAPP.Converters"
-             x:Class="FWSAPP.App">
+﻿<Application
+    x:Class="FWSAPP.App"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FWSAPP"
+    xmlns:converters="clr-namespace:FWSAPP.Converters">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <converters:StringNotEmptyToBoolConverter x:Key="StringNotEmptyToBoolConverter" />
+            <converters:MultiplyFontConverter x:Key="MultiplyFontConverter" />
+            <x:Double x:Key="GlobalFontScale">1.0</x:Double>
+            <Style TargetType="Label">
+                <Setter Property="FontSize"
+                        Value="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="FontSize"
+                        Value="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="FontSize"
+                        Value="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
 </Application>

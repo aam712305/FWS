@@ -18,9 +18,11 @@ public partial class SettingsPage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
+        fontSizeSlider.Value = Preferences.Get("FontScale", 1.0);
+        fontSizeLabel.Text = $"{(int)(fontSizeSlider.Value * 100)}%";
 
         serverLabel.Text = Preferences.Get("server", "");
-        
+
         // 伺服器APK版本
         apkLabel.Text = $"線上版本：{Preferences.Get("latestApkVersion", "未知")}";
 
@@ -28,8 +30,8 @@ public partial class SettingsPage : ContentPage
         currentLabel.Text = $"當前版本：{AppInfo.VersionString}";
 
         LoadSettingsJson();
-        
-        wifiLabel.Text = _wifiService.GetCurrentWifiName();                
+
+        wifiLabel.Text = _wifiService.GetCurrentWifiName();
         userLabel.Text = Preferences.Get("currentUser", "");
         permissionLabel.Text = Preferences.Get("currentPermission", "");
 
@@ -64,7 +66,7 @@ public partial class SettingsPage : ContentPage
             areaPicker.SelectedIndex = 0;
         }
     }
-
+    // 登出按鈕
     private async void OnLogoutButtonClicked(object? sender, EventArgs e)
     {
         bool confirm = await DisplayAlert("確認登出", "確定要登出嗎？", "是", "否");
@@ -81,11 +83,17 @@ public partial class SettingsPage : ContentPage
             // 建立全新 BlankPage 實例以解決 parent 問題
             MainThread.BeginInvokeOnMainThread(() =>
             {
-                Application.Current.MainPage = new NavigationPage(new BlankPage());
+                MainThread.BeginInvokeOnMainThread(() =>
+                {
+                    var currentWindow = Application.Current?.Windows.FirstOrDefault();
+                    if (currentWindow != null)
+                        currentWindow.Page = new NavigationPage(new BlankPage());
+                });
             });
         }
     }
 
+    // 讀取設定檔案
     private void LoadSettingsJson()
     {
         var settingPath = Path.Combine(FileSystem.AppDataDirectory, "appsetting.json");
@@ -129,6 +137,18 @@ public partial class SettingsPage : ContentPage
         }
     }
 
+    // 設定全部字型大小
+    private void FontSizeSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+    {
+        double scale = Math.Round(e.NewValue, 2);
+        fontSizeLabel.Text = $"{(int)(scale * 100)}%";
+
+        Preferences.Set("FontScale", scale);
+
+        Application.Current.Resources["GlobalFontScale"] = scale;
+    }
+
+    // 設定字型顏色
     private void StorePicker_SelectedIndexChanged(object? sender, EventArgs e) // 修改為object?
     {
         var selectedStore = storePicker.SelectedItem as string;
@@ -152,11 +172,12 @@ public partial class SettingsPage : ContentPage
         areaPicker.SelectedIndex = 0;
     }
 
+    // 儲存設定
     private async void OnSaveSettingsClicked(object sender, EventArgs e)
     {
         Preferences.Set("SelectedStore", storePicker.SelectedItem?.ToString() ?? "");
         Preferences.Set("SelectedArea", areaPicker.SelectedItem?.ToString() ?? "");
-
+        Preferences.Set("FontScale", fontSizeSlider.Value);
         await DisplayAlert("儲存設定", "您的設定已經成功儲存。", "OK");
     }
 }

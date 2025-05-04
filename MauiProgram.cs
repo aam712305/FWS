@@ -28,7 +28,8 @@ public static class MauiProgram
         builder.Services.AddSingleton<CacheSyncService>();
         builder.Services.AddTransient<SettingsPage>();
         builder.Services.AddSingleton<NoteService>();
-        builder.Services.AddTransient<IDPage>();
+        builder.Services.AddTransient<IDPage>();        
         return builder.Build();
+
     }
 }

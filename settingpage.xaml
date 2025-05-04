@@ -7,23 +7,27 @@
              Padding="{OnPlatform iOS='10,40,10,10', Android='0', WinUI='0'}">
 
     <StackLayout Padding="10,10,10,10" Spacing="20">
+
+        <Label Text="設定頁面" FontSize="24" HorizontalOptions="Center" />
         
-        <Label Text="設定頁面" FontSize="24" HorizontalOptions="Center" />               
+        <Label Text="文字大小比例" />
+        <Slider x:Name="fontSizeSlider" Minimum="0.5" Maximum="1.5" Value="1.0" ValueChanged="FontSizeSlider_ValueChanged" />
+        <Label x:Name="fontSizeLabel" Text="100%" />
         
-        <StackLayout Orientation="Horizontal">            
-            <Label x:Name="currentLabel" FontSize="20" Padding="0,2,0,0" />            
+        <StackLayout Orientation="Horizontal">
+            <Label x:Name="currentLabel" FontSize="20" Padding="0,2,0,0" />
             <Label x:Name="apkLabel" FontSize="20" Padding="20,2,0,0" />
-        </StackLayout>        
-        
+        </StackLayout>
+
         <StackLayout Orientation="Horizontal">
             <Label Text="當前伺服器" FontSize="20" />
             <Label x:Name="serverLabel" FontSize="20" Padding="10,2,0,0"/>
         </StackLayout>
-        
+
         <StackLayout Orientation="Horizontal">
             <Label Text="當前WiFi" FontSize="20" />
             <Label x:Name="wifiLabel" FontSize="20" Padding="10,2,0,0" />
-        </StackLayout>        
+        </StackLayout>
 
         <StackLayout Orientation="Horizontal">
             <Label Text="使用者:" FontSize="20" VerticalOptions="Center" />
@@ -36,7 +40,7 @@
             VerticalOptions="Center"
             Clicked="OnLogoutButtonClicked"/>
         </StackLayout>
-        
+
         <StackLayout Orientation="Horizontal">
             <Label Text="權限:" FontSize="20" />
             <Label x:Name="permissionLabel" FontSize="20" Padding="10,2,0,0" />

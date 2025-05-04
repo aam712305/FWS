@@ -12,6 +12,7 @@ namespace FWSAPP
         public App()
         {
             InitializeComponent();
+            Resources["GlobalFontScale"] = Preferences.Get("FontScale", 1.0);
         }
 
         protected override Window CreateWindow(IActivationState? activationState)
@@ -102,7 +103,7 @@ namespace FWSAPP
                     Preferences.Set("server", server);
 
                     // ➡️ 同時取得舊版本號
-                    oldVersion = jsonDoc.RootElement.GetProperty("latestApkVersion").GetString() ?? "";                    
+                    oldVersion = AppInfo.VersionString;
                 }
                 catch (Exception ex)
                 {
@@ -126,10 +127,11 @@ namespace FWSAPP
                     var jsonString = await client.GetStringAsync("https://fws.duckdns.org/api/appsetting.json");
                     var newJsonDoc = JsonDocument.Parse(jsonString);
                     var newVersion = newJsonDoc.RootElement.GetProperty("latestApkVersion").GetString() ?? "";
-
+                    Debug.Print("getaction");
                     // ➡️ 比較版本號，有變化再寫入本地並檢查更新
                     if (!string.Equals(oldVersion, newVersion))
                     {
+                        Debug.Print("getaction1");
                         File.WriteAllText(LocalSettingPath, jsonString);
 
                         var server = newJsonDoc.RootElement.GetProperty("server").GetString() ?? "";
@@ -140,6 +142,7 @@ namespace FWSAPP
                     }
                     else
                     {
+                        Debug.Print("getaction2");
                         // 版本沒變，仍然要更新本地檔案，確保其他設定項也同步
                         File.WriteAllText(LocalSettingPath, jsonString);
                         var server = newJsonDoc.RootElement.GetProperty("server").GetString() ?? "";

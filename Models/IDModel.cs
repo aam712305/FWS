@@ -13,11 +13,14 @@ namespace FWSAPP.Models
         public string? 末四碼 { get; set; }
         public string? 等級 { get; set; }
 
+        public bool 是否禁打 => 狀態 == "True";
         public string? 備註 { get; set; }
         public string? 備註修改者 { get; set; }
         public string? 備註修改時間 { get; set; }
 
         [Ignore]  // ← 不在SQLite內建立此欄位
         public string 圖像 => $"{Preferences.Get("server", "")}/idphoto/{ID}.jpg";
+
+        public string 個人備註 { get; set; } = "";
     }
 }

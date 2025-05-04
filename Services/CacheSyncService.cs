@@ -19,8 +19,8 @@ public class CacheSyncService
         {
             await ServiceSetting.UpdateAppSettingAsync();
             await ServiceSetting.DownloadIDDatabaseAsync();
+            await ServiceSetting.CheckAppVersionAsync();
 
-            
         }
         catch (Exception ex)
         {

@@ -34,7 +34,12 @@ public partial class BlankPage : ContentPage
                 return;
             }
 
-            Application.Current.MainPage = new NavigationPage(new IDPage(wifiService));
+            var currentWindow = Application.Current?.Windows.FirstOrDefault();
+            if (currentWindow != null)
+            {
+                currentWindow.Page = new NavigationPage(new IDPage(wifiService));
+            }
+
         }
 
     }

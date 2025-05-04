@@ -100,12 +100,12 @@ public static class ServiceSetting
         {
             var jsonText = await File.ReadAllTextAsync(LocalSettingPath);
             var jsonDoc = JsonDocument.Parse(jsonText);
-
+            
             var latestVersion = jsonDoc.RootElement.GetProperty("latestApkVersion").GetString();
-            var apkDownloadUrl = $"{Preferences.Get("server", "")}/api/fws.apk";
+            var apkDownloadUrl = $"{Preferences.Get("server", "")}/api/com.companyname.fwsapp-Signed.apk";
 
-            if (string.IsNullOrEmpty(latestVersion) || string.IsNullOrEmpty(apkDownloadUrl))
-                return;
+            if (string.IsNullOrEmpty(latestVersion) || string.IsNullOrEmpty(apkDownloadUrl))                
+                return;           
 
             var currentVersion = AppInfo.VersionString;
 
@@ -122,7 +122,13 @@ public static class ServiceSetting
                             "立即更新", "取消");
 
                         if (result)
-                            await DownloadAndInstallApkAsync(apkDownloadUrl);
+                        {
+#if ANDROID
+                            await FWSAPP.Platforms.Android.ApkInstaller.DownloadAndInstallApkAsync(apkDownloadUrl);
+#endif
+                        }
+
+
                     }
                 });
             }
@@ -133,30 +139,7 @@ public static class ServiceSetting
         }
     }
 
-    public static async Task DownloadAndInstallApkAsync(string apkDownloadUrl)
-    {
-        try
-        {
-            var filePath = Path.Combine(FileSystem.AppDataDirectory, "update.apk");
-
-            using var client = new HttpClient();
-            var apkBytes = await client.GetByteArrayAsync(apkDownloadUrl);
-            await File.WriteAllBytesAsync(filePath, apkBytes);
-
-#if ANDROID
-        Platforms.Android.ApkInstaller.InstallApk(filePath);
-#endif
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"APK下載或安裝失敗: {ex.Message}");
-            await MainThread.InvokeOnMainThreadAsync(async () =>
-            {
-                await Application.Current.MainPage.DisplayAlert("錯誤", $"下載或安裝失敗：{ex.Message}", "OK");
-            });
-        }
-    }
-
+   
     // 🔸從SQL下載資料到本地SQLite
     public static async Task DownloadIDDatabaseAsync()
     {

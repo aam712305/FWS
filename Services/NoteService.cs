@@ -65,5 +65,17 @@ namespace FWSAPP.Services
         {
             public string? 備註內容 { get; set; }
         }
+        //遊戲狀況
+        public async Task<bool> UpdateGameStatusAsync(int id, string status)
+        {
+            var payload = new
+            {
+                ID = id,
+                狀態 = status
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("/app/notes/updateGameStatus", payload);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

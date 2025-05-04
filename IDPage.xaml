@@ -4,7 +4,6 @@
              Padding="{OnPlatform iOS='10,40,10,10', Android='0,0,0,30', WinUI='0,0,0,30'}" 
              Shell.NavBarIsVisible="False"
              Shell.FlyoutHeight="0">
-    
     <Grid RowDefinitions="Auto,*,auto" RowSpacing="5">
 
         <!-- 三條橫線、搜尋框、更新按鈕 同一排 -->
@@ -49,16 +48,25 @@
                         <StackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
                             <Label>
                                 <Label.FormattedText>
-                                    <FormattedString>
-                                        <Span Text="{Binding ID, StringFormat='{0}-'}"/>
-                                        <Span Text="{Binding 姓名, StringFormat='{0}-'}"/>
-                                        <Span Text="{Binding 帳號, StringFormat='{0}-'}"/>
-                                        <Span Text="{Binding 末四碼, StringFormat='{0}-'}"/>
-                                        <Span Text="{Binding 等級, StringFormat='V{0}'}"/>
+                                    <FormattedString>                                        
+                                        <Span Text="{Binding ID, StringFormat='{0}-'}"
+                  FontSize="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+                                        <Span Text="{Binding 姓名, StringFormat='{0}-'}"
+                  FontSize="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+                                        <Span Text="{Binding 帳號, StringFormat='{0}-'}"
+                  FontSize="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+                                        <Span Text="{Binding 末四碼, StringFormat='{0}-'}"
+                  FontSize="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
+                                        <Span Text="{Binding 等級, StringFormat='V{0}'}"
+                  FontSize="{Binding Source={x:Static Application.Current}, Path=Resources[GlobalFontScale], Converter={StaticResource MultiplyFontConverter}}" />
                                     </FormattedString>
                                 </Label.FormattedText>
-                            </Label>                            
-                            <Label Text="{Binding 備註}" LineBreakMode="NoWrap" FontSize="Small" TextColor="Gray"/>
+                            </Label>
+                            <HorizontalStackLayout Spacing="5">
+                                <Label Text="禁打" TextColor="Red" IsVisible="{Binding 是否禁打}" />
+                                <Label Text="{Binding 備註}" TextColor="Gray" LineBreakMode="NoWrap" />
+                            </HorizontalStackLayout>
+                            <Label Text="{Binding 個人備註}" LineBreakMode="NoWrap"  TextColor="Gray" IsVisible="{Binding 個人備註, Converter={StaticResource StringNotEmptyToBoolConverter}}"/>
                         </StackLayout>
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Tapped="OnItemTapped"/>
